@@ -1,7 +1,7 @@
 /Url参数记录/
 /.vscode/
 /__pycache__/
-networkAppClass/__pycache__/
+/networkAppClass/__pycache__/
 data/classRoomData.json
 data/mobilizeBorrow.json
 config/classRoomNumConfigTest.json
