@@ -1,0 +1,9 @@
+{ 
+  "auth_type": "local",
+  "username": "",
+  "sms_code": "",
+  "password": "",
+  "captcha": "",
+  "needCaptcha": "false",
+  "captcha_id": ""
+}
