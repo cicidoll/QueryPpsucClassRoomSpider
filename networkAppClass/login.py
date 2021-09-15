@@ -40,6 +40,3 @@ class Login:
         url = 'https://webvpn.ppsuc.edu.cn/do-login'
         response = self.session.post(url, data = self.loginData, headers = self.headers)
         self.response = response
-
-login = Login('test')
-print(login.headers)
