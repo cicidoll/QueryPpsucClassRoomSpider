@@ -1,0 +1,4 @@
+interval==1.0.0
+requests==2.26.0
+lxml==4.6.3
+selenium==3.141.0
