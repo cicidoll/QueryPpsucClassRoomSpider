@@ -4,5 +4,5 @@
 /networkAppClass/__pycache__/
 data/classRoomData.json
 data/mobilizeBorrow.json
-config/classRoomNumConfigTest.json
+/config/classRoomNumConfigTest.json
 test.py
