@@ -23,6 +23,7 @@ session.cookies = http.cookiejar.LWPCookieJar('cookie')
 
 """ 设置登录用方法所需Headers参数 """
 headers = loadJson('config/requestConfig.json')["headers"]
+session.headers = headers
 # 实例化登录器，触发登录操作
 # 更新session，保存更新后响应值
 login = Login(session)

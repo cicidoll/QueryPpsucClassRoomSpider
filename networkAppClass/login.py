@@ -17,7 +17,7 @@ class Login:
         # 保存session
         self.session = session
         self.response = ''
-        # self.doLogin()
+        self.doLogin()
     
     """ 登录注册时，
       需要发送的验证码随机参数

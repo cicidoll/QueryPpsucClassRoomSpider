@@ -1,3 +1,4 @@
+import time
 import requests
 from selenium import webdriver
 
@@ -15,15 +16,28 @@ class GetWeek:
         webapi = webdriver.Chrome()
         # 全局等待10min
         webapi.implicitly_wait(10)
-        webapi.get(self.seleniumUrl)
-        # 更新cookies
-        webapi.delete_all_cookies()
-        webapi = self.cookiesConver(webapi)
-        # 获取节点数据
-        webapi.get(self.seleniumUrl)
-        weekElement = webapi.find_element_by_xpath('//*[@id="calendar_contain"]/div/span')
-        result = weekElement.text
-        webapi.quit()
+        try:
+            try:
+                webapi.get(self.seleniumUrl)
+            except Exception as e:
+                print(e)
+            finally:
+                print(webapi.current_url)
+            # 更新cookies
+            webapi.delete_all_cookies()
+            time.sleep(5)
+            webapi = self.cookiesConver(webapi)
+            webapi.refresh()
+            # 获取节点数据
+            webapi.get(self.seleniumUrl)
+            print('-'*30)
+            print(webapi.current_url)
+            weekElement = webapi.find_element_by_xpath('//*[@id="calendar_contain"]/div/span')
+            result = weekElement.text
+        except Exception as e:
+            print(e)
+        finally:
+            webapi.quit()
         return int(result)
 
     def cookiesConver(self, webapi):
