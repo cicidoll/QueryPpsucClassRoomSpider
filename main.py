@@ -5,7 +5,7 @@ from requests.api import get
 
 from networkAppClass.login import Login
 from networkAppClass.get_urldata import GetUrlData
-from networkAppClass.get_week import GetWeek
+from networkAppClass.computed_week import GetWeek
 from networkAppClass.create_url_pool import CreateUrlPool
 from networkAppClass.get_html import GetHtmlBus
 from utils import loadJson
@@ -35,13 +35,14 @@ swytUrlText = GetUrlData(headers, session).getSwytUrl()
 # 获取教务处链接
 jwcUrlText = GetUrlData(headers, session).getJwcUrl()
 # 获取教学周
-getWeek = GetWeek(session, jwcUrlText)
-week = getWeek.webdriverRun()
-# 批量创建链接池
+computedWeek = GetWeek(session, headers, jwcUrlText)
+week = computedWeek.getFirstDay()
+
+# # 批量创建链接池
 createUrlPool = CreateUrlPool(swytUrlText)
 createUrlPool.createUrlObject()
 urlPools = createUrlPool.urlPoolResult
-# 启动多线程并发控制
+# # 启动多线程并发控制
 getHtmlBus = GetHtmlBus(headers, session)
 getHtmlBus.bus(urlPools, week)
 
