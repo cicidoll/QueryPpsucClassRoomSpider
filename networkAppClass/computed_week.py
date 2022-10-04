@@ -3,7 +3,7 @@ import datetime
 import math
 
 class GetWeek:
-    def __init__(self, session, headers, jwcUrlText):
+    def __init__(self, session, headers, jwcUrlText=""):
         self.jwcUrl = 'https://webvpn.ppsuc.edu.cn%s' % (jwcUrlText)
         # 将传入的Headers和Session进行保存
         self.headers = headers
@@ -36,5 +36,21 @@ class GetWeek:
         initFirstDifference = 0 if initFirstDifference==0 else 7 - initFirstDifference
         firstNowDifference = (nowDate - firstDate).days - initFirstDifference
         if firstNowDifference<0: return 0
-        week = math.ceil(firstNowDifference / 7) + 1
+        week = math.ceil(firstNowDifference / 7) + 1 # 师兄写错哩
+        return week
+
+    @staticmethod
+    def manual_getweek(FirstDate: str):
+        """依赖管理员输入从而手动获取和计算当前教学周"""
+        # 初始化变量类型为datetime
+        initDate = datetime.datetime.strptime('2021-8-23', "%Y-%m-%d")
+        firstDate = datetime.datetime.strptime(FirstDate, "%Y-%m-%d")
+        nowDate = datetime.datetime.today()
+        # nowDate = datetime.datetime.strptime('2022-11-9', "%Y-%m-%d")
+        # 开始计算
+        initFirstDifference = (firstDate - initDate).days % 7
+        initFirstDifference = 0 if initFirstDifference==0 else 7 - initFirstDifference
+        firstNowDifference = (nowDate - firstDate).days - initFirstDifference
+        if firstNowDifference<0: return 0
+        week = math.floor(firstNowDifference / 7) + 1
         return week

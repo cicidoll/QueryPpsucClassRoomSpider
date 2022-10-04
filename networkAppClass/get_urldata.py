@@ -3,7 +3,6 @@ import time
 class GetUrlData:
     # 四位一体课表链接所在path
     # swytUrlPath = '//*[@id="group-2"]/div[9]/div/div[3]/@data-redirect'
-
     def __init__(self, headers, session):
         # 将传入的Headers和Session进行保存
         self.headers = headers

@@ -3,9 +3,11 @@ import asyncio
 import functools
 from .process_text import ProcessText
 
+
 # requests会阻塞asyncio循环
 class GetHtmlBus:
     """ 异步爬取网页文本总线控制器 """
+
     def __init__(self, headers, session):
         # 将传入的Headers和Session进行保存
         self.requestsUA = headers
@@ -27,11 +29,11 @@ class GetHtmlBus:
         self.processText.processTextSave()
 
     async def send(self,
-        requestsObject={
-            "uid": "-1",
-            "classRoomName": "None",
-            "classRoomNum": "-1",
-            "url": "None"}):
+                   requestsObject={
+                       "uid": "-1",
+                       "classRoomName": "None",
+                       "classRoomNum": "-1",
+                       "url": "None"}):
         """ 发送网络请求，并返回抓取到的响应内容 """
         # 自定义响应对象：responseObject
         # responseObject = {"uid":链接Id, "classRoomName":教学楼名, "classRoomNum":教室, "content":抓取文本}
@@ -39,26 +41,28 @@ class GetHtmlBus:
             "uid": requestsObject["uid"],
             "classRoomName": requestsObject["classRoomName"],
             "classRoomNum": requestsObject["classRoomNum"],
-            "content": ''
+            "content": '',
+            "url": requestsObject['url']
         }
         try:
             # 利用BaseEventLoop.run_in_executor()可以在coroutine中执行第三方的命令，例如requests.get()
             # 第三方命令的参数与关键字利用functools.partial传入
             loop = asyncio.get_event_loop()
 
-            future = loop.run_in_executor( None,
-                        functools.partial(
-                            self.session.get,
-                            url = requestsObject["url"],
-                            headers = self.requestsUA
-                        )
-                    )
+            future = loop.run_in_executor(None,
+                                          functools.partial(
+                                              self.session.get,
+                                              url=requestsObject["url"],
+                                              headers=self.requestsUA
+                                          )
+                                          )
             response = await future
             # 要设置响应包的编码格式为gbk，不然会乱码！！！
             response.encoding = "gbk"
             # HTML内容
-            content = response.text 
+            content = response.text
             responseObject["content"] = content
             self.processText.processTextContent(responseObject)
-        except:
-            pass
+        except Exception as e:
+            print(e)
+            raise e
