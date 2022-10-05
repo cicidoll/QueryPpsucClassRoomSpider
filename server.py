@@ -1,4 +1,4 @@
-from sanic import Sanic
+from sanic import Sanic, request
 from sanic.response import json
 from utils import loadJson
 app = Sanic("MyHelloWorldApp")
@@ -16,10 +16,15 @@ async def getAllMessage(request):
     return json(ClassRoomData)
 
 
-@app.get("/detail/<Input>")
-async def getDetailedMessage(request,Input):
+@app.get("/detail")
+async def getDetailedMessage(request: request.Request):
+    args = request.args
+    print(args)
     try:
-        buildingName, Time, date = str(Input).split("_")[0], str(Input).split("_")[1], str(Input).split("_")[2]
+        buildingName, Time, date = args['building'][0], args['time'][0], args['date'][0]
         return json(ClassRoomData[urlMap0[buildingName]][Time][date])
     except Exception as e:
         return json({e})
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8000)
