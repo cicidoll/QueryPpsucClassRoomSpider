@@ -110,13 +110,15 @@ docker run --name ppsucClassRoomSpider -p 8000:8000 -d classroomspider
 ### 接口格式
 
 
-| url                                                       | 含义              |
-|-----------------------------------------------------------|-----------------|
-| http://localhost:8000/                                    | 获取所有数据          |
-| http://localhost:8000/detail?building=zj&date=1&time=am12 | 获取zj星期1上午12节的数据 |
-| http://localhost:8000/detail?building=zl&date=1&time=pm12 | 获取zl星期1下午12节的数据 |
-| http://localhost:8000/detail?building=tj&date=1&time=am12 | 获取tj星期1上午12节的数据 |
-| http://localhost:8000/updateData                          | 更新数据            |
+| url                                                        | 含义              |
+|------------------------------------------------------------|-----------------|
+| http://localhost:8000/                                     | 获取所有数据          |
+| http://localhost:8000/detail?building=zj&date=1&time=am12  | 获取zj星期1上午12节的数据 |
+| http://localhost:8000/detail?building=zl&date=1&time=pm12  | 获取zl星期1下午12节的数据 |
+| http://localhost:8000/detail?building=tj&date=1&time=am12  | 获取tj星期1上午12节的数据 |
+| http://localhost:8000/detail/mobilize?building=tj&room=团阶八 | 获取团阶八的换课数据      |
+| http://localhost:8000/detail/borrow?building=tj&room=团阶八   | 获取团阶八的借教室数据     |
+| http://localhost:8000/updateData                           | 更新数据            |
 
 ### TODO
 

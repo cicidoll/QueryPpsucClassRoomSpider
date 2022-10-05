@@ -26,7 +26,7 @@ async def getAllMessage(request):
         return json(e)
 
 
-@app.get("/detail")
+@app.get("/detail/Class")
 async def getDetailedMessage(request: request.Request):
     args = request.args
     print(args)
@@ -35,6 +35,29 @@ async def getDetailedMessage(request: request.Request):
         return json(ClassRoomData[urlMap0[buildingName]][Time][date])
     except Exception as e:
         return json({e})
+
+
+@app.get("/detail/mobilize")
+async def getDetailedMessageForMobilize(request: request.Request):
+    args = request.args
+    print(args)
+    try:
+        buildingName, room = args['building'][0], args['room'][0]
+        return json(loadJson("data/mobilizeBorrow.json")["mobilize"][urlMap0[buildingName]][room])
+    except Exception as e:
+        return json({e})
+
+
+@app.get("/detail/borrow")
+async def getDetailedMessageForBorrow(request: request.Request):
+    args = request.args
+    print(args)
+    try:
+        buildingName, room = args['building'][0], args['room'][0]
+        return json(loadJson("data/mobilizeBorrow.json")["borrow"][urlMap0[buildingName]][room])
+    except Exception as e:
+        return json({e})
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
