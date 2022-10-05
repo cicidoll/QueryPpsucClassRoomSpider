@@ -1,6 +1,7 @@
 from sanic import Sanic, request
-from sanic.response import json
+from sanic.response import json, text
 from utils import loadJson
+import refreshClassroomData
 app = Sanic("MyHelloWorldApp")
 ClassRoomData = loadJson("data/classRoomData.json")
 BuildingConfig = loadJson("config/classRoomNumConfig.json")["classRoomNum"]
@@ -14,6 +15,15 @@ urlMap1 = {"zhuJian": "zj", "zhongLou": "zl", "XiPei": "xp", "TuanJie": "tj"}
 @app.get("/")
 async def getAllMessage(request):
     return json(ClassRoomData)
+
+
+@app.get("/updateData")
+async def getAllMessage(request):
+    try:
+        refreshClassroomData.Work()
+        return text("NO ERROR OCCURRED")
+    except Exception as e:
+        return json(e)
 
 
 @app.get("/detail")
