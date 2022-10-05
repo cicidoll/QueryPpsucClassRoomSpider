@@ -100,10 +100,10 @@ filetree
 在根目录下输入依次输入如下两条命令，耐心等待：
 
 ```plaintext
-docker build -t ClassRoomSpider .
-docker run --name ppsucClassRoomSpider -p 8000:8000 -d ClassRoomSpider
+docker build -t classroomspider .
+docker run --name ppsucClassRoomSpider -p 8000:8000 -d classroomspider
 ```
-
+（这里docker容器的名字随便取就行，镜像的名字有不能大写的要求，满足这个要求后也可以随便取）
 然后就可以访问8000端口获取服务
 
 
