@@ -33,6 +33,8 @@ class ProcessText:
         writeFile.close()
 
     def processTextContent(self, responseObject):
+        if responseObject["classRoomName"] == "TuanJie":
+            print("::debug::")
         htmlContent = etree.HTML(responseObject["content"])
         pathCount = 0
         dayCount = 1
@@ -54,29 +56,37 @@ class ProcessText:
             # append(0)为占位符,表示有课
             if 0 <= pathCount < 5:
                 if pathFlag == 0:  # pathFlag为0，代表无课
+                    """self.classRoomDataJsonText[responseObject["classRoomName"]]["am12"][str(dayCount)].append(
+                        int(responseObject["classRoomNum"]))"""
                     self.classRoomDataJsonText[responseObject["classRoomName"]]["am12"][str(dayCount)].append(
-                        int(responseObject["classRoomNum"]))
+                        (responseObject["classRoomNum"]))
                     print("上午12节无课")
                 else:
                     print("上午12节有课")
             elif 5 <= pathCount < 10:
                 if pathFlag == 0:
+                    """self.classRoomDataJsonText[responseObject["classRoomName"]]["am34"][str(dayCount)].append(
+                        int(responseObject["classRoomNum"]))"""
                     self.classRoomDataJsonText[responseObject["classRoomName"]]["am34"][str(dayCount)].append(
-                        int(responseObject["classRoomNum"]))
+                        (responseObject["classRoomNum"]))
                     print("上午34节无课")
                 else:
                     print("上午34节有课")
             elif 10 <= pathCount < 15:
                 if pathFlag == 0:
+                    """self.classRoomDataJsonText[responseObject["classRoomName"]]["pm12"][str(dayCount)].append(
+                        int(responseObject["classRoomNum"]))"""
                     self.classRoomDataJsonText[responseObject["classRoomName"]]["pm12"][str(dayCount)].append(
-                        int(responseObject["classRoomNum"]))
+                        (responseObject["classRoomNum"]))
                     print("下午12节无课")
                 else:
                     print("下午12节有课")
             elif 15 <= pathCount < 20:
                 if pathFlag == 0:
+                    """self.classRoomDataJsonText[responseObject["classRoomName"]]["pm34"][str(dayCount)].append(
+                        int(responseObject["classRoomNum"]))"""
                     self.classRoomDataJsonText[responseObject["classRoomName"]]["pm34"][str(dayCount)].append(
-                        int(responseObject["classRoomNum"]))
+                        (responseObject["classRoomNum"]))
                     print("下午34节无课")
                 else:
                     print("下午34节有课")
