@@ -117,3 +117,8 @@ docker run --name ppsucClassRoomSpider -p 8000:8000 -d ClassRoomSpider
 | http://localhost:8000/detail?building=zl&date=1&time=pm12 | 获取zl星期1下午12节的数据 |
 | http://localhost:8000/detail?building=tj&date=1&time=am12 | 获取tj星期1上午12节的数据 |
 | http://localhost:8000/updateData                          | 更新数据            |
+
+### TODO
+
+ - 更新数据的方式确实很奇怪
+ - 借教室的数据没有整合
