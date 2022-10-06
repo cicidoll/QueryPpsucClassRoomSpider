@@ -9,6 +9,12 @@ BuildingRoom = ["zhuJian", "zhongLou", "XiPei"]
 
 urlMap0 = {"zj": "zhuJian", "zl": "zhongLou", "xp": "XiPei", "tj": "TuanJie"}
 urlMap1 = {"zhuJian": "zj", "zhongLou": "zl", "XiPei": "xp", "TuanJie": "tj"}
+urlMap2 = {"tj1" : "团阶一", "tj2": "团阶二","tj3": "团阶三","tj4": "团阶四",
+            "tj5": "团阶五",
+            "tj6": "团阶六",
+            "tj7": "团阶七",
+            "tj8": "团阶八",
+            "tj9":"团报告厅"}
 #  url缩写和楼名称映射一下
 
 
@@ -31,7 +37,7 @@ async def getDetailedMessage(request: request.Request):
     args = request.args
     print(args)
     try:
-        buildingName, Time, date = args['building'][0], args['time'][0], args['date'][0]
+        buildingName, Time, date = args['bd'][0], args['t'][0], args['dt'][0]
         return json(ClassRoomData[urlMap0[buildingName]][Time][date])
     except Exception as e:
         return json({e})
@@ -42,7 +48,9 @@ async def getDetailedMessageForMobilize(request: request.Request):
     args = request.args
     print(args)
     try:
-        buildingName, room = args['building'][0], args['room'][0]
+        buildingName, room = args['bd'][0], args['rm'][0]
+        if buildingName == "tj":
+            room = urlMap2[room]
         return json(loadJson("data/mobilizeBorrow.json")["mobilize"][urlMap0[buildingName]][room])
     except Exception as e:
         return json({e})
@@ -53,7 +61,9 @@ async def getDetailedMessageForBorrow(request: request.Request):
     args = request.args
     print(args)
     try:
-        buildingName, room = args['building'][0], args['room'][0]
+        buildingName, room = args['bd'][0], args['rm'][0]
+        if buildingName == "tj":
+            room = urlMap2[room]
         return json(loadJson("data/mobilizeBorrow.json")["borrow"][urlMap0[buildingName]][room])
     except Exception as e:
         return json({e})

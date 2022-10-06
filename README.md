@@ -23,12 +23,17 @@
 
 ## 目录
 
-- [上手指南](#上手指南)
-  - [开发前的配置要求](#开发前的配置要求)
-  - [安装步骤](#安装步骤)
-- [文件目录说明](#文件目录说明)
-- [版本控制](#版本控制)
-- [作者](#作者)
+- [四位一体课表_数据源](#四位一体课表_数据源)
+  - [目录](#目录)
+    - [上手指南](#上手指南)
+          - [开发前的配置要求](#开发前的配置要求)
+          - [**安装步骤**](#安装步骤)
+    - [文件目录说明](#文件目录说明)
+    - [版本控制](#版本控制)
+    - [原作者](#原作者)
+    - [使用docker部署服务](#使用docker部署服务)
+    - [接口格式](#接口格式)
+    - [TODO](#todo)
 
 ### 上手指南
 
@@ -109,16 +114,34 @@ docker run --name ppsucClassRoomSpider -p 8000:8000 -d classroomspider
 
 ### 接口格式
 
+ - 获取所有数据：
+
+``http://localhost:8000/``
+
+ - 获取课程数据：
+
+``http://localhost:8000/detail/Class?bd=建筑名&t=时间段&dt=星期``
+
+ - 获取换课数据：
+
+``http://localhost:8000/detail/mobilize?bd=建筑名&rm=教室``
+
+ - 获取借教室数据：
+
+``http://localhost:8000/detail/borrow?bd=建筑名&rm=教室``
+
+其中：建筑名包含：``tj zj zl xp``，时间段包含：``am12 am34 pm12 pm34``，星期包含``1 2 3 4 5``
+
+对于不同的楼教室名称不同，一般就使用数字表示即可。特别的，团结的教室为：``tj1``（团阶一）、``tj2``（团阶二）...``tj8``（团阶八）、``tj9``（团报告厅）
+
+ - Example
 
 | url                                                        | 含义              |
 |------------------------------------------------------------|-----------------|
 | http://localhost:8000/                                     | 获取所有数据          |
-| http://localhost:8000/detail?building=zj&date=1&time=am12  | 获取zj星期1上午12节的数据 |
-| http://localhost:8000/detail?building=zl&date=1&time=pm12  | 获取zl星期1下午12节的数据 |
-| http://localhost:8000/detail?building=tj&date=1&time=am12  | 获取tj星期1上午12节的数据 |
-| http://localhost:8000/detail/mobilize?building=tj&room=团阶八 | 获取团阶八的换课数据      |
-| http://localhost:8000/detail/borrow?building=tj&room=团阶八   | 获取团阶八的借教室数据     |
-| http://localhost:8000/updateData                           | 更新数据            |
+| http://localhost:8000/detail/Class?bd=tj&t=am34&dt=3  | 获取tj星期1上午12节的课程数据 |
+| http://localhost:8000/detail/mobilize?bd=tj&rm=tj9  | 获取tj楼团报告厅教室的换课数据 |
+| http://localhost:8000/detail/borrow?bd=zj&rm=202  | 获取zj楼202教室的借教室数据 |
 
 ### TODO
 
