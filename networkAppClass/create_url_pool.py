@@ -1,24 +1,28 @@
 from urllib import parse
 import sys
+
 sys.path.append(".")
-from utils import loadJson
+from utils import loadJson, encodeGBK
 
 # 拼接字符串模板
-ZHUJIAN = "{}?{}&jxcdmc=%27%CD%C5%D6%FD%BD%A3%C2%A5{}%27"
-ZHONG = "{}?{}&jxcdmc=%27%CD%C5%D3%FD%BE%AF%D6%D0%C2%A5{}%27"
-XIPEI = "{}?{}&jxcdmc=%27%CD%C5%D3%FD%BE%AF%CE%F7%C2%A5{}%27"
+ZHUJIAN = "{}?{}&jxcdmc=%27" + encodeGBK("团铸剑楼") + "{}%27"
+ZHONG = "{}?{}&jxcdmc=%27" + encodeGBK("团育警中楼") + "{}%27"
+XIPEI = "{}?{}&jxcdmc=%27" + encodeGBK("团育警西楼") + "{}%27"
+TUANJIE = "{}?{}&jxcdmc=%27{}%27"
 
 # 拼接字符串具体填充对象
 PARSEURLENCODE = {
-  "zhuJian": ZHUJIAN,
-  "zhongLou": ZHONG,
-  "XiPei": XIPEI
+    "zhuJian": ZHUJIAN,
+    "zhongLou": ZHONG,
+    "XiPei": XIPEI,
+    "TuanJie": TUANJIE
 }
 
 # 2021-9-12更新
 # 发现四位一体课表查询链接中，原index.php更换为jxcdkbcx.php
 OLDPHP = "index.php"
 NEWPHP = "jxcdkbcx.php"
+
 
 # 批量创建链接池
 class CreateUrlPool:
@@ -37,13 +41,22 @@ class CreateUrlPool:
         for classRoomName in self.classRoomNameList:
             classRoomNumList = self.classRoomsNumLists[classRoomName]
             for classRoomNum in classRoomNumList:
-                url: str = (
-                    PARSEURLENCODE[classRoomName].format(
-                        self.swytUrlText.replace(OLDPHP, NEWPHP),# 待修改
-                        parse.urlencode(self.createUrlDic),
-                        classRoomNum
+                if classRoomName != "TuanJie":
+                    url: str = (
+                        PARSEURLENCODE[classRoomName].format(
+                            self.swytUrlText.replace(OLDPHP, NEWPHP),  # 待修改
+                            parse.urlencode(self.createUrlDic),
+                            classRoomNum
+                        )
                     )
-                  )
+                else:  # 对于团阶的数据特殊处理
+                    url: str = (
+                        PARSEURLENCODE[classRoomName].format(
+                            self.swytUrlText.replace(OLDPHP, NEWPHP),  # 待修改
+                            parse.urlencode(self.createUrlDic),
+                            encodeGBK(classRoomNum)
+                        )
+                    )
                 # 拼接为完整的Url链接
                 urlReferer = self.requestsUA["headers"]["Referer"][0:-1]
                 url = urlReferer + url
@@ -55,4 +68,7 @@ class CreateUrlPool:
                 }
                 self.urlPoolResult.append(urlObject)
                 # uid自增1
-                uid = uid +1
+                uid = uid + 1
+
+# https://webvpn.ppsuc.edu.cn/http/77726476706e69737468656265737421a1a510d276693c1e2c59dae2c90476/swyt/jxcdkbcx.php?xnxq=%222021-20221%22&jxcdmc=%27%CD%C5%D6%FD%BD%A3%C2%A5101%27
+# https://webvpn.ppsuc.edu.cn/http/77726476706e69737468656265737421a1a510d276693c1e2c59dae2c90476/swyt/jxcdkbcx.php?xnxq= %222021-20221%22 &jxcdmc= %27%CD%C5%D3%FD%BE%AF%CE%F7%C2%A5509%27
